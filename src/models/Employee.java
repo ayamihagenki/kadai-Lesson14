@@ -106,6 +106,14 @@ import javax.persistence.Table;
             this.created_at = created_at;
         }
 
+        public Timestamp getUpdated_at() {
+            return updated_at;
+        }
+
+        public void setUpdated_at(Timestamp updated_at) {
+            this.updated_at = updated_at;
+        }
+
         public Integer getDelete_flag() {
             return delete_flag;
         }
