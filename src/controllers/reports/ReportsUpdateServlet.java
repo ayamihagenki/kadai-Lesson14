@@ -50,10 +50,12 @@ public class ReportsUpdateServlet extends HttpServlet {
             r.setContent(request.getParameter("content"));
             r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
 
+            //バリデーションを実行してエラーがあったら編集画面のフォームに戻る
             List<String> errors = ReportValidator.validate(r);
             if(errors.size() > 0) {
                 em.close();
 
+                // フォームに初期値を設定、さらにエラーメッセージを送る
                 request.setAttribute("_token", request.getSession().getId());
                 request.setAttribute("report", r);
                 request.setAttribute("errors", errors);
@@ -61,6 +63,7 @@ public class ReportsUpdateServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/edit.jsp");
                 rd.forward(request, response);
             } else {
+                //データベースを更新
                 em.getTransaction().begin();
                 em.getTransaction().commit();
                 em.close();
